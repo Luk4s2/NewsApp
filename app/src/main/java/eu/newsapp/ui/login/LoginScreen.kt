@@ -13,6 +13,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import eu.newsapp.ui.login.components.LoginRequiredDialog
 import eu.newsapp.ui.navigation.NavUtils
 import eu.newsapp.utils.Constants
 import eu.newsapp.viewmodel.login.LoginViewModel
@@ -37,26 +38,18 @@ fun LoginScreen(
 	}
 
 	if (showDialog) {
-		AlertDialog(
-			onDismissRequest = { },
-			confirmButton = {
-				TextButton(
-					onClick = {
-						loginViewModel.closeLoginRequiredDialog()
-						loginViewModel.resetLoginState()
-					}
-				) {
-					Text(Constants.TRY_LOGIN_BUTTON)
-				}
-			},
-			title = { Text(Constants.LOGIN_REQUIRED_DIALOG_TITLE) },
-			text = { Text(Constants.LOGIN_REQUIRED_DIALOG_TEXT) }
+		LoginRequiredDialog(
+			onDismiss = {},
+			onTryLogin = {
+				loginViewModel.closeLoginRequiredDialog()
+				loginViewModel.resetLoginState()
+			}
 		)
 	} else {
 		Column(
 			modifier = Modifier
 				.fillMaxSize()
-				.padding(24.dp),
+				.padding(Constants.LOGIN_SCREEN_PADDING.dp),
 			verticalArrangement = Arrangement.Center,
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {
@@ -69,7 +62,7 @@ fun LoginScreen(
 				keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
 			)
 
-			Spacer(modifier = Modifier.height(16.dp))
+			Spacer(modifier = Modifier.height(Constants.LOGIN_FIELD_SPACING.dp))
 
 			TextField(
 				value = loginViewModel.password,
@@ -82,7 +75,7 @@ fun LoginScreen(
 			)
 
 			if (loginFailed) {
-				Spacer(modifier = Modifier.height(8.dp))
+				Spacer(modifier = Modifier.height(Constants.LOGIN_ERROR_SPACING.dp))
 				Text(
 					text = Constants.LOGIN_ERROR_MESSAGE,
 					color = MaterialTheme.colorScheme.error,
@@ -90,7 +83,7 @@ fun LoginScreen(
 				)
 			}
 
-			Spacer(modifier = Modifier.height(24.dp))
+			Spacer(modifier = Modifier.height(Constants.LOGIN_BUTTON_SPACING.dp))
 
 			Button(
 				onClick = {
@@ -103,7 +96,7 @@ fun LoginScreen(
 				Text(Constants.LOGIN_BUTTON)
 			}
 
-			Spacer(modifier = Modifier.height(12.dp))
+			Spacer(modifier = Modifier.height(Constants.LOGIN_SKIP_SPACING.dp))
 
 			TextButton(onClick = { loginViewModel.skipLogin() }) {
 				Text(Constants.SKIP_BUTTON)

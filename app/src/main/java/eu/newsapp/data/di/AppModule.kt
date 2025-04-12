@@ -1,5 +1,7 @@
-package eu.newsapp.di
+package eu.newsapp.data.di
 
+import eu.newsapp.data.network.NewsApiService
+import eu.newsapp.utils.Constants
 import eu.newsapp.viewmodel.login.LoginViewModel
 import eu.newsapp.viewmodel.feed.FeedViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -13,7 +15,7 @@ val appModule = module {
 	// Retrofit
 	single {
 		Retrofit.Builder()
-			.baseUrl("https://newsdata.io/api/1/")
+			.baseUrl(Constants.BASE_URL)
 			.addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create())
 			.client(
 				okhttp3.OkHttpClient.Builder()
@@ -23,7 +25,7 @@ val appModule = module {
 					.build()
 			)
 			.build()
-			.create(eu.newsapp.network.NewsApiService::class.java)
+			.create(NewsApiService::class.java)
 	}
 
 	// Repository

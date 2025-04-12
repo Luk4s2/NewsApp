@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.newsapp.ui.feed.components.NewsItem
-import eu.newsapp.ui.navigation.Routes
+import eu.newsapp.ui.navigation.NavUtils
 import eu.newsapp.utils.Constants
 import eu.newsapp.viewmodel.feed.FeedViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -48,15 +48,15 @@ fun FeedScreen(
 
 			else -> {
 				LazyColumn(
-					contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
-					verticalArrangement = Arrangement.spacedBy(8.dp)
+					contentPadding = PaddingValues(
+						horizontal = Constants.FEED_HORIZONTAL_PADDING.dp,
+						vertical = Constants.FEED_VERTICAL_PADDING.dp
+					),
+					verticalArrangement = Arrangement.spacedBy(Constants.FEED_ITEM_SPACING.dp)
 				) {
 					items(feedViewModel.articles) { article ->
 						NewsItem(article) {
-							navController.navigate(Routes.DETAIL)
-							navController.currentBackStackEntry
-								?.savedStateHandle
-								?.set("article", article)
+							NavUtils.navigateToDetail(navController, article)
 						}
 					}
 				}
