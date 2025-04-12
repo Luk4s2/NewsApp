@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import eu.newsapp.model.Article
+import eu.newsapp.ui.detail.FeedDetailScreen
 import eu.newsapp.ui.feed.FeedScreen
 import eu.newsapp.ui.login.LoginScreen
 
@@ -15,6 +17,12 @@ fun AppNavGraph(navController: NavHostController) {
 		}
 		composable(Routes.FEED) {
 			FeedScreen(navController)
+		}
+		composable(Routes.DETAIL) { backStackEntry ->
+			val article = backStackEntry.savedStateHandle.get<Article>("article")
+			article?.let {
+				FeedDetailScreen(article = it, navController = navController)
+			}
 		}
 
 	}
