@@ -1,12 +1,14 @@
 package eu.newsapp.di
 
 import eu.newsapp.viewmodel.login.LoginViewModel
+import eu.newsapp.viewmodel.feed.FeedViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val appModule = module {
 	viewModel { LoginViewModel() }
+	viewModel { FeedViewModel(get()) }
 
 	// Retrofit
 	single {
