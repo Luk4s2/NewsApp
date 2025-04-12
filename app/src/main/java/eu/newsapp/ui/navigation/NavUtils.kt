@@ -1,6 +1,8 @@
 package eu.newsapp.ui.navigation
 
 import androidx.navigation.NavController
+import eu.newsapp.model.Article
+import eu.newsapp.utils.Constants
 
 object NavUtils {
 
@@ -10,9 +12,10 @@ object NavUtils {
 		}
 	}
 
-	fun navigateToLogin(navController: NavController) {
-		navController.navigate(Routes.LOGIN) {
-			popUpTo(0)
-		}
+	fun navigateToDetail(navController: NavController, article: Article) {
+		navController.navigate(Routes.DETAIL)
+		navController.currentBackStackEntry
+			?.savedStateHandle
+			?.set(Constants.NAV_ARG_ARTICLE, article)
 	}
 }

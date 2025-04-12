@@ -1,15 +1,14 @@
 package eu.newsapp.viewmodel.feed
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.newsapp.model.Article
 import eu.newsapp.repository.NewsRepository
+import eu.newsapp.repository.Result
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import eu.newsapp.utils.Constants
 
 class FeedViewModel(
 	private val repository: NewsRepository
@@ -26,16 +25,15 @@ class FeedViewModel(
 
 	fun loadNews(apiKey: String?) {
 		viewModelScope.launch {
-			try {
-				isLoading = true
-				errorMessage = null
-				val response = repository.getNews(apiKey)
-				articles = response.results ?: emptyList()
-			} catch (e: Exception) {
-				errorMessage = e.localizedMessage ?: Constants.RESPONSE_ERROR
-			} finally {
-				isLoading = false
+			isLoading = true
+			errorMessage = null
+
+			when (val result = repository.getNews(apiKey)) {
+				is Result.Success -> articles = result.data
+				is Result.Error -> errorMessage = result.message
 			}
+
+			isLoading = false
 		}
 	}
 }

@@ -19,24 +19,24 @@ fun NewsItem(
 	Card(
 		modifier = Modifier
 			.fillMaxWidth()
-			.padding(vertical = 6.dp)
+			.padding(vertical = Constants.CARD_SPACING_VERTICAL.dp)
 			.clip(MaterialTheme.shapes.medium)
 			.clickable { onClick() },
 		colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
-		elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+		elevation = CardDefaults.cardElevation(defaultElevation = Constants.CARD_ELEVATION.dp)
 	) {
-		Column(modifier = Modifier.padding(16.dp)) {
+		Column(modifier = Modifier.padding(Constants.CARD_PADDING.dp)) {
 			article.imageUrl?.let {
 				AsyncImage(
 					model = it,
 					contentDescription = article.title,
 					modifier = Modifier
 						.fillMaxWidth()
-						.height(180.dp)
+						.height(Constants.IMAGE_HEIGHT.dp)
 						.clip(MaterialTheme.shapes.medium)
 				)
 
-				Spacer(modifier = Modifier.height(12.dp))
+				Spacer(modifier = Modifier.height(Constants.IMAGE_SPACER_HEIGHT.dp))
 			}
 
 			Text(

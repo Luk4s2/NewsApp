@@ -18,6 +18,7 @@ import coil.compose.AsyncImage
 import eu.newsapp.model.Article
 import androidx.navigation.NavController
 import eu.newsapp.ui.detail.components.LabeledTextRow
+import eu.newsapp.utils.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +33,7 @@ fun FeedDetailScreen(
 			TopAppBar(
 				title = {
 					Text(
-						text = "Article Detail",
+						text = Constants.DETAIL_TITLE,
 						maxLines = 1,
 						overflow = TextOverflow.Ellipsis,
 						style = MaterialTheme.typography.titleLarge
@@ -40,7 +41,7 @@ fun FeedDetailScreen(
 				},
 				navigationIcon = {
 					IconButton(onClick = { navController.popBackStack() }) {
-						Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+						Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = Constants.BACK_BUTTON_DESCRIPTION)
 					}
 				},
 				colors = TopAppBarDefaults.topAppBarColors(
@@ -57,12 +58,12 @@ fun FeedDetailScreen(
 						type = "text/plain"
 						putExtra(Intent.EXTRA_TEXT, article.link ?: "")
 					}
-					val shareIntent = Intent.createChooser(sendIntent, "Share article")
+					val shareIntent = Intent.createChooser(sendIntent, Constants.SHARE_ARTICLE_TITLE)
 					context.startActivity(shareIntent)
 				},
 				containerColor = MaterialTheme.colorScheme.secondaryContainer
 			) {
-				Icon(Icons.Default.Share, contentDescription = "Share")
+				Icon(Icons.Default.Share, contentDescription = Constants.SHARE_BUTTON_DESCRIPTION)
 			}
 		}
 	) { padding ->
@@ -70,9 +71,9 @@ fun FeedDetailScreen(
 			modifier = Modifier
 				.padding(padding)
 				.verticalScroll(rememberScrollState())
-				.padding(16.dp)
+				.padding(Constants.CARD_PADDING.dp)
 				.fillMaxSize(),
-			verticalArrangement = Arrangement.spacedBy(16.dp)
+			verticalArrangement = Arrangement.spacedBy(Constants.FEED_ITEM_SPACING.dp)
 		) {
 			article.imageUrl?.let {
 				AsyncImage(
@@ -80,12 +81,12 @@ fun FeedDetailScreen(
 					contentDescription = article.title,
 					modifier = Modifier
 						.fillMaxWidth()
-						.height(220.dp)
+						.height(Constants.IMAGE_HEIGHT.dp)
 				)
 			}
 
 			Text(
-				text = article.title ?: "No Title",
+				text = article.title ?: Constants.FEED_PLACEHOLDER_TITLE,
 				style = MaterialTheme.typography.headlineSmall,
 				color = MaterialTheme.colorScheme.onBackground
 			)
@@ -99,17 +100,17 @@ fun FeedDetailScreen(
 			HorizontalDivider()
 
 			Text(
-				text = article.content ?: article.description ?: "No content available.",
+				text = article.content ?: article.description ?: Constants.FEED_PLACEHOLDER_CONTENT,
 				style = MaterialTheme.typography.bodyMedium,
 				color = MaterialTheme.colorScheme.onBackground
 			)
 
 			HorizontalDivider()
 
-			LabeledTextRow("Source", article.sourceId ?: "-")
-			LabeledTextRow("Language", article.language ?: "-")
-			LabeledTextRow("Country", article.country?.joinToString(", ") ?: "-")
-			LabeledTextRow("Category", article.category?.joinToString(", ") ?: "-")
+			LabeledTextRow(Constants.LABEL_SOURCE, article.sourceId ?: "-")
+			LabeledTextRow(Constants.LABEL_LANGUAGE, article.language ?: "-")
+			LabeledTextRow(Constants.LABEL_COUNTRY, article.country?.joinToString(", ") ?: "-")
+			LabeledTextRow(Constants.LABEL_CATEGORY, article.category?.joinToString(", ") ?: "-")
 		}
 	}
 
@@ -117,4 +118,3 @@ fun FeedDetailScreen(
 		navController.popBackStack()
 	}
 }
-

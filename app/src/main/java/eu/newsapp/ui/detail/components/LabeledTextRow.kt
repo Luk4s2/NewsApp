@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import eu.newsapp.utils.Constants
 import eu.newsapp.utils.extensions.capitalizeFirstWord
 
 @Composable
@@ -17,8 +18,8 @@ fun LabeledTextRow(
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
-			.padding(bottom = 4.dp),
-		horizontalArrangement = Arrangement.spacedBy(8.dp),
+			.padding(bottom = Constants.LABEL_BOTTOM_PADDING.dp),
+		horizontalArrangement = Arrangement.spacedBy(Constants.LABEL_SPACING.dp),
 		verticalAlignment = Alignment.CenterVertically
 	) {
 		Text(
@@ -26,8 +27,8 @@ fun LabeledTextRow(
 			style = MaterialTheme.typography.labelMedium,
 			color = MaterialTheme.colorScheme.primary,
 			modifier = Modifier
-				.width(88.dp)
-				.padding(top = 2.dp),
+				.width(Constants.LABEL_WIDTH.dp)
+				.padding(top = Constants.LABEL_TOP_PADDING.dp),
 			textAlign = TextAlign.Start
 		)
 		Text(
