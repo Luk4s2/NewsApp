@@ -5,6 +5,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -27,12 +29,12 @@ fun LoginScreen(
 	val focusManager = LocalFocusManager.current
 	val keyboardController = LocalSoftwareKeyboardController.current
 
-	val isLoggedIn = loginViewModel.isLoggedIn
+	val isLoggedIn by loginViewModel.isLoggedIn.collectAsState()
 	val loginFailed = loginViewModel.loginFailed
 	val showDialog = loginViewModel.showLoginRequiredDialog
 
 	LaunchedEffect(isLoggedIn) {
-		if (isLoggedIn == true) {
+		if (isLoggedIn) {
 			NavUtils.navigateToFeed(navController)
 		}
 	}

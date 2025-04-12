@@ -1,12 +1,16 @@
 package eu.newsapp.viewmodel.login
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import eu.newsapp.data.preferences.UserPreferences
 import eu.newsapp.utils.Constants
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.*
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(
+	private val userPreferences: UserPreferences
+) : ViewModel() {
 
 	var email by mutableStateOf("")
 		private set
@@ -14,8 +18,12 @@ class LoginViewModel : ViewModel() {
 	var password by mutableStateOf("")
 		private set
 
-	var isLoggedIn by mutableStateOf<Boolean?>(null)
-		private set
+	val isLoggedIn: StateFlow<Boolean> = userPreferences.isLoggedInFlow
+		.stateIn(
+			scope = viewModelScope,
+			started = SharingStarted.WhileSubscribed(5000),
+			initialValue = false
+		)
 
 	var loginFailed by mutableStateOf(false)
 		private set
@@ -35,7 +43,9 @@ class LoginViewModel : ViewModel() {
 
 	fun login() {
 		if (email == Constants.VALID_EMAIL && password == Constants.VALID_PASSWORD) {
-			isLoggedIn = true
+			viewModelScope.launch {
+				userPreferences.setLoggedIn(true)
+			}
 			loginFailed = false
 		} else {
 			loginFailed = true
@@ -47,7 +57,7 @@ class LoginViewModel : ViewModel() {
 		showLoginRequiredDialog = true
 	}
 
-	private fun emptyTextFields(){
+	private fun emptyTextFields() {
 		email = ""
 		password = ""
 	}
@@ -57,7 +67,9 @@ class LoginViewModel : ViewModel() {
 	}
 
 	fun resetLoginState() {
-		isLoggedIn = null
+		viewModelScope.launch {
+			userPreferences.setLoggedIn(false)
+		}
 		emptyTextFields()
 		loginFailed = false
 	}

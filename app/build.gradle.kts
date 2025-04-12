@@ -68,6 +68,9 @@ dependencies {
 	implementation (libs.converter.gson)
 	implementation (libs.logging.interceptor)
 
-	//Add Coil
+	// Add Coil
 	implementation (libs.coil.compose)
+
+    // Shared Preferences
+	implementation(libs.androidx.datastore.preferences)
 }

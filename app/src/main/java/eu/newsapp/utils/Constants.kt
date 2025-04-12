@@ -11,6 +11,10 @@ object Constants {
 	const val VALID_EMAIL = "elonga@elonga.com"
 	const val VALID_PASSWORD = "ElongaTheBest"
 
+	// DataStore Preferences
+	const val DATASTORE_NAME = "user_prefs"
+	const val PREF_IS_LOGGED_IN = "is_logged_in"
+
 	// Login labels
 	const val EMAIL_LABEL = "Email"
 	const val PASSWORD_LABEL = "Password"
