@@ -1,0 +1,22 @@
+name: Auto PR to Develop
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ github.ref_name }}
+          destination_branch: develop
+          pr_title: 'Auto PR: ${{ github.ref_name }}'
+          pr_body: 'This PR was auto-created from ${{ github.ref_name }}'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
