@@ -1,0 +1,59 @@
+# Built files
+/build/
+/*.apk
+/*.ap_
+*.dex
+
+# Local configuration files
+/local.properties
+*.iml
+.idea/
+.gradle/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Keystore files
+*.jks
+*.keystore
+
+# macOS junk
+.DS_Store
+
+# Windows junk
+Thumbs.db
+
+# Log files
+*.log
+
+# Android Studio
+*.hprof
+*.orig
+.recommenders/
+.navigation/
+.cache/
+
+# Jetpack Compose
+*.kotlin_module
+
+# Koin/DI auto-generated
+koin.properties
+
+# Gradle
+**/build/
+
+# Generated folders
+out/
+gen/
+bin/
+
+# Kotlin-specific
+*.class
+*.kt.cache
+
+# Signing
+signing.properties
+
+# Misc
+*.swp
+*.tmp
