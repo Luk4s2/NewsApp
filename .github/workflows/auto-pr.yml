@@ -22,4 +22,4 @@ jobs:
           destination_branch: develop
           pr_title: 'Auto PR: ${{ github.ref_name }}'
           pr_body: 'This PR was auto-created from ${{ github.ref_name }}'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
