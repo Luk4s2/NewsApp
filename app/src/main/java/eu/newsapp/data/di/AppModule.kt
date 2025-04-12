@@ -1,6 +1,7 @@
 package eu.newsapp.data.di
 
 import eu.newsapp.data.network.NewsApiService
+import eu.newsapp.data.preferences.UserPreferences
 import eu.newsapp.utils.Constants
 import eu.newsapp.viewmodel.login.LoginViewModel
 import eu.newsapp.viewmodel.feed.FeedViewModel
@@ -9,8 +10,11 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val appModule = module {
-	viewModel { LoginViewModel() }
+	viewModel { LoginViewModel(get()) }
 	viewModel { FeedViewModel(get()) }
+
+	// Shared Preferences
+	single { UserPreferences(context = get()) }
 
 	// Retrofit
 	single {
