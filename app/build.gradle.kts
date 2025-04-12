@@ -61,4 +61,9 @@ dependencies {
 	// Koin for Android & Compose
 	implementation (libs.koin.android)
 	implementation (libs.koin.androidx.compose)
+
+	// Retrofit & Okhttp
+	implementation (libs.retrofit)
+	implementation (libs.converter.gson)
+	implementation (libs.logging.interceptor)
 }
