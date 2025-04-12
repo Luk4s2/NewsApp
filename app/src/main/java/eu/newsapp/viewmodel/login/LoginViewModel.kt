@@ -34,13 +34,13 @@ class LoginViewModel : ViewModel() {
 	}
 
 	fun login() {
-		if (email == Constants.VALID_EMAIL && password == Constants.VALID_PASSWORD) {
+//		if (email == Constants.VALID_EMAIL && password == Constants.VALID_PASSWORD) {
 			isLoggedIn = true
-			loginFailed = false
-		} else {
-			loginFailed = true
-			emptyTextFields()
-		}
+//			loginFailed = false
+//		} else {
+//			loginFailed = true
+//			emptyTextFields()
+//		}
 	}
 
 	fun skipLogin() {

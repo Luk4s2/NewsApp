@@ -1,6 +1,8 @@
 package eu.newsapp.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class NewsResponseModel(
 	val status: String?,
@@ -8,6 +10,7 @@ data class NewsResponseModel(
 	val results: List<Article>?
 )
 
+@Parcelize
 data class Article(
 	val title: String?,
 	val link: String?,
@@ -19,5 +22,5 @@ data class Article(
 	val country: List<String>?,
 	val category: List<String>?,
 	val language: String?
-)
+) : Parcelable
 
