@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import eu.newsapp.model.Article
 import androidx.navigation.NavController
-import eu.newsapp.ui.components.LabeledTextRow
+import eu.newsapp.ui.detail.components.LabeledTextRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
