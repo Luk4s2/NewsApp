@@ -9,7 +9,9 @@ import retrofit2.http.Query
 interface NewsApiService {
 	@GET("news")
 	suspend fun getNews(
-		@Header("X-ACCESS-KEY") apiKey: String?,
-		@Query("language") language: String = Constants.LANGUAGE
+		@Header("X-ACCESS-KEY") apiKey: String,
+		@Query("language") language: String = Constants.LANGUAGE,
+		@Query("q") query: String = Constants.QUERY,
+		@Query("page") page: String? = null
 	): NewsResponseModel
 }

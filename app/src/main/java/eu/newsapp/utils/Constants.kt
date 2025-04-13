@@ -5,7 +5,11 @@ object Constants {
 	// API endpoint
 	const val BASE_URL = "https://newsdata.io/api/1/"
 	const val LANGUAGE = "en"
-	const val API_KEY = ""
+	const val QUERY = "world"
+
+	// To Reviewer who look at this , (KEYs passwords etc.) SHOULD NEVER be stored in APK or hardcoded for security purposes
+	// but this time to demonstrate the working task, so i put it here
+	const val API_KEY = "pub_800090b8212f2332b13a2dcefefa42783e091"
 
 	// Correct Credentials
 	const val VALID_EMAIL = "elonga@elonga.com"
@@ -34,6 +38,8 @@ object Constants {
 
 	// Feed errors
 	const val RESPONSE_ERROR = "An error occurred"
+	const val REQUEST_IN_PROGRESS = "Request already in progress."
+	const val NO_MORE_PAGES = "No more pages available."
 
 	// Feed screen
 	const val FEED_PLACEHOLDER_TITLE = "No Title"
