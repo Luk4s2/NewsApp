@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class NewsResponseModel(
 	val status: String?,
 	val totalResults: Int?,
+	val nextPage: String?,
 	val results: List<Article>?
 )
 
@@ -23,4 +24,3 @@ data class Article(
 	val category: List<String>?,
 	val language: String?
 ) : Parcelable
-
