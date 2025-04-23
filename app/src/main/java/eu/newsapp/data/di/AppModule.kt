@@ -38,5 +38,5 @@ val appModule = module {
 	}
 
 	// Repository
-	single { eu.newsapp.repository.NewsRepository(get()) }
+	single<eu.newsapp.repository.INewsRepository> { eu.newsapp.repository.NewsRepository(get()) }
 }
