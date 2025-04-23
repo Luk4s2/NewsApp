@@ -10,32 +10,36 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import eu.newsapp.repository.INewsRepository
 import eu.newsapp.utils.Constants
 
 /**
  * ViewModel responsible for managing the feed screen's data and state.
  *
  * Handles initial data loading, pagination on scroll,
- * and error management. It communicates with [NewsRepository]
+ * and error management. It communicates with [INewsRepository]
  * to fetch paginated articles from the API.
  *
  * @property repository The repository used to fetch news data.
  */
-class FeedViewModel(
-	private val repository: NewsRepository
+open class FeedViewModel(
+	private val repository: INewsRepository
 ) : ViewModel() {
 
 	/** Holds the list of currently loaded articles. */
-	var articles by mutableStateOf<List<Article>>(emptyList())
-		private set
+	private var _articles by mutableStateOf<List<Article>>(emptyList())
+	open val articles: List<Article>
+		get() = _articles
 
 	/** Flag to indicate whether data is currently being loaded. */
-	var isLoading by mutableStateOf(false)
-		private set
+	private var _isLoading by mutableStateOf(false)
+	open val isLoading: Boolean
+		get() = _isLoading
 
 	/** Holds the error message, if any occurred during data fetching. */
-	var errorMessage by mutableStateOf<String?>(null)
-		private set
+	private var _errorMessage by mutableStateOf<String?>(null)
+	open val errorMessage: String?
+		get() = _errorMessage
 
 	/** Pagination controller to avoid duplicate loads and maintain scroll state. */
 	private val pagination = PaginationController()
@@ -45,20 +49,20 @@ class FeedViewModel(
 	 * Resets pagination controller and error state.
 	 */
 	fun loadInitialNews() {
-		isLoading = true
-		errorMessage = null
+		_isLoading = true
+		_errorMessage = null
 		pagination.reset()
 
 		viewModelScope.launch {
 			when (val result = repository.getInitialNews(Constants.API_KEY)) {
 				is Result.Success -> {
-					articles = result.data.articles.distinctBy { it.title + it.pubDate }
+					_articles = result.data.articles.distinctBy { it.title + it.pubDate }
 				}
 				is Result.Error -> {
-					errorMessage = result.message
+					_errorMessage = result.message
 				}
 			}
-			isLoading = false
+			_isLoading = false
 		}
 	}
 
@@ -76,13 +80,16 @@ class FeedViewModel(
 			when (val result = repository.getNextNews(Constants.API_KEY)) {
 				is Result.Success -> {
 					val newArticles = result.data.articles
-					articles = (articles + newArticles).distinctBy { it.title + it.pubDate }
+					_articles = (articles + newArticles).distinctBy { it.title + it.pubDate }
 				}
 				is Result.Error -> {
-					errorMessage = result.message
+					_errorMessage = result.message
 				}
 			}
 			pagination.onRequestFinished()
 		}
+	}
+	fun hasMorePages(): Boolean {
+		return repository.hasMorePages()
 	}
 }

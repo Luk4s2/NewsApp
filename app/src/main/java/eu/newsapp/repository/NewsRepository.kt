@@ -42,7 +42,7 @@ data class PagedResult(
  *
  * @param api The Retrofit service used for network requests.
  */
-class NewsRepository(private val api: NewsApiService) {
+open class NewsRepository(private val api: NewsApiService) : INewsRepository  {
 
 	/** Token representing the next page to fetch from the API. */
 	private var nextPageToken: String? = null
@@ -56,7 +56,7 @@ class NewsRepository(private val api: NewsApiService) {
 	 * @param apiKey The API key for authentication.
 	 * @return A [Result] containing a [PagedResult] or an error message.
 	 */
-	suspend fun getInitialNews(apiKey: String): Result<PagedResult> {
+	override suspend fun getInitialNews(apiKey: String): Result<PagedResult> {
 		nextPageToken = null
 		return fetchNews(apiKey)
 	}
@@ -67,7 +67,7 @@ class NewsRepository(private val api: NewsApiService) {
 	 * @param apiKey The API key for authentication.
 	 * @return A [Result] containing a [PagedResult] or an error message.
 	 */
-	suspend fun getNextNews(apiKey: String): Result<PagedResult> {
+	override suspend fun getNextNews(apiKey: String): Result<PagedResult> {
 		if (isRequestInProgress) {
 			return Result.Error(Constants.REQUEST_IN_PROGRESS)
 		}
@@ -108,5 +108,5 @@ class NewsRepository(private val api: NewsApiService) {
 	 * Checks whether more pages of results are available.
 	 * @return `true` if there are more pages to load, otherwise `false`.
 	 */
-	fun hasMorePages(): Boolean = nextPageToken != null
+	override fun hasMorePages(): Boolean = nextPageToken != null
 }

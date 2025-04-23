@@ -45,32 +45,41 @@ dependencies {
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.lifecycle.runtime.ktx)
 	implementation(libs.androidx.activity.compose)
+
 	implementation(platform(libs.androidx.compose.bom))
 	implementation(libs.androidx.ui)
 	implementation(libs.androidx.ui.graphics)
 	implementation(libs.androidx.ui.tooling.preview)
 	implementation(libs.androidx.material3)
 	implementation(libs.androidx.navigation.compose)
+
+// Koin for Android & Compose
+	implementation(libs.koin.android)
+	implementation(libs.koin.androidx.compose)
+
+// Retrofit & OkHttp
+	implementation(libs.retrofit)
+	implementation(libs.converter.gson)
+	implementation(libs.logging.interceptor)
+
+// Coil for image loading
+	implementation(libs.coil.compose)
+
+// Shared Preferences (DataStore)
+	implementation(libs.androidx.datastore.preferences)
+	implementation(libs.androidx.navigation.testing)
+
+// Unit test
 	testImplementation(libs.junit)
+	testImplementation(libs.kotlinx.coroutines.test)
+
+// Android Instrumentation tests
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
 	androidTestImplementation(platform(libs.androidx.compose.bom))
-	androidTestImplementation(libs.androidx.ui.test.junit4)
-	debugImplementation(libs.androidx.ui.tooling)
+	androidTestImplementation(libs.androidx.core.testing)
+
+	debugImplementation(libs.ui.tooling)
 	debugImplementation(libs.androidx.ui.test.manifest)
-
-	// Koin for Android & Compose
-	implementation (libs.koin.android)
-	implementation (libs.koin.androidx.compose)
-
-	// Retrofit & Okhttp
-	implementation (libs.retrofit)
-	implementation (libs.converter.gson)
-	implementation (libs.logging.interceptor)
-
-	// Add Coil
-	implementation (libs.coil.compose)
-
-    // Shared Preferences
-	implementation(libs.androidx.datastore.preferences)
+	androidTestImplementation(libs.androidx.ui.test.junit4)
 }

@@ -14,10 +14,11 @@ import eu.newsapp.utils.Constants
 @Composable
 fun NewsItem(
 	article: Article,
+	modifier: Modifier = Modifier,
 	onClick: () -> Unit
 ) {
 	Card(
-		modifier = Modifier
+		modifier = modifier
 			.fillMaxWidth()
 			.padding(vertical = Constants.CARD_SPACING_VERTICAL.dp)
 			.clip(MaterialTheme.shapes.medium)
@@ -25,18 +26,18 @@ fun NewsItem(
 		colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
 		elevation = CardDefaults.cardElevation(defaultElevation = Constants.CARD_ELEVATION.dp)
 	) {
-		Column(modifier = Modifier.padding(Constants.CARD_PADDING.dp)) {
+		Column(modifier = modifier.padding(Constants.CARD_PADDING.dp)) {
 			article.imageUrl?.let {
 				AsyncImage(
 					model = it,
 					contentDescription = article.title,
-					modifier = Modifier
+					modifier = modifier
 						.fillMaxWidth()
 						.height(Constants.IMAGE_HEIGHT.dp)
 						.clip(MaterialTheme.shapes.medium)
 				)
 
-				Spacer(modifier = Modifier.height(Constants.IMAGE_SPACER_HEIGHT.dp))
+				Spacer(modifier = modifier.height(Constants.IMAGE_SPACER_HEIGHT.dp))
 			}
 
 			Text(
