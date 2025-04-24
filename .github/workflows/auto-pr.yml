@@ -34,7 +34,7 @@ jobs:
 
   run-android-instrumentation-tests:
     runs-on: ubuntu-latest
-    needs: test-and-create-pr
+    needs: run-unit-tests
 
     steps:
       - name: Checkout code
@@ -62,7 +62,7 @@ jobs:
           script: ./gradlew connectedDebugAndroidTest
 
   create-pr:
-    needs: [test-and-create-pr, android-instrumentation-tests]
+    needs: [run-unit-tests, run-android-instrumentation-tests]
     runs-on: ubuntu-latest
     if: success()
 
