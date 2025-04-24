@@ -5,6 +5,7 @@ on:
     branches:
       - 'feature/**'
       - 'bugfix/**'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -56,14 +57,14 @@ jobs:
       - name: Run Android UI tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: 30
           target: google_apis
           arch: x86_64
-          profile: pixel
+          profile: pixel_4
           force-avd-creation: true
-          emulator-options: -no-window -no-audio -no-boot-anim -camera-back none -camera-front none -gpu swiftshader_indirect
+          emulator-options: -no-snapshot-save -no-audio -no-window -gpu swiftshader_indirect -camera-back none -camera-front none
           disable-animations: true
-          script: ./gradlew connectedDebugAndroidTest
+          script: chmod +x ./gradlew && ./gradlew connectedDebugAndroidTest
 
   create-pr:
     needs: [run-unit-tests, run-android-instrumentation-tests]
