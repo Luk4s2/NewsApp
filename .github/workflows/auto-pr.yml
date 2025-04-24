@@ -57,14 +57,21 @@ jobs:
       - name: Run Android UI tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
+          api-level: 29
           target: google_apis
-          arch: x86_64
-          profile: pixel_4
-          force-avd-creation: true
-          emulator-options: -no-snapshot-save -no-audio -no-window -gpu swiftshader_indirect -camera-back none -camera-front none
+          arch: x86
+          profile: Nexus 5X
+          ram-size: 1536
+          heap-size: 256
+          sdcard-path-or-size: 512M
+          emulator-options: -no-window -no-audio -no-snapshot -gpu swiftshader_indirect
           disable-animations: true
-          script: chmod +x ./gradlew && ./gradlew connectedDebugAndroidTest
+          emulator-boot-timeout: 1000
+          script: |
+            adb wait-for-device
+            adb shell 'while [[ -z $(getprop sys.boot_completed) || $(getprop sys.boot_completed) != 1 ]]; do sleep 1; done'
+            adb shell input keyevent 82
+            ./gradlew connectedDebugAndroidTest
 
   create-pr:
     needs: [run-unit-tests, run-android-instrumentation-tests]
