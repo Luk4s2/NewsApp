@@ -1,4 +1,4 @@
-name: Auto PR to Develop
+name: CI to Develop
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  test-and-create-pr:
+  run-unit-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,7 +32,7 @@ jobs:
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
 
-  android-instrumentation-tests:
+  run-android-instrumentation-tests:
     runs-on: ubuntu-latest
     needs: test-and-create-pr
 
@@ -52,10 +52,13 @@ jobs:
       - name: Run Android UI tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
+          api-level: 29
           target: google_apis
           arch: x86_64
           profile: pixel
+          force-avd-creation: true
+          emulator-options: -no-window -no-audio -no-boot-anim -camera-back none -camera-front none -gpu swiftshader_indirect
+          disable-animations: true
           script: ./gradlew connectedDebugAndroidTest
 
   create-pr:
